@@ -8,6 +8,7 @@ from api.v1.views import app_views
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenities():
+    """ a function that display all amenities """
     objs = storage.all(Amenity)
     lst = []
     for obj in objs.values():
@@ -18,6 +19,7 @@ def amenities():
 @app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
                  strict_slashes=False)
 def amenity(amenity_id):
+    """ a function that display a particular amenity """
     obj = storage.get(Amenity, amenity_id)
     if not obj:
         abort(404)
@@ -27,6 +29,7 @@ def amenity(amenity_id):
 @app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
+    """ a fucntion that deletes a particular amenity """
     obj = storage.get(Amenity, amenity_id)
     if not obj:
         abort(404)
@@ -38,6 +41,7 @@ def delete_amenity(amenity_id):
 @app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
 def post_amenity():
+    """ a function that post a new amenity """
     res = request.get_json()
     dic = {}
     if not res:
@@ -54,6 +58,7 @@ def post_amenity():
 @app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(amenity_id):
+    """ a fucntion that update a particular amenity """
     res = request.get_json()
     if not res:
         abort(400, {'Not a JSON'})

@@ -10,6 +10,7 @@ from api.v1.views import app_views
 @app_views.route('/cities/<string:city_id>', methods=['GET'],
                  strict_slashes=False)
 def city(city_id):
+    """ gets a particular city """
     obj = storage.get(City, city_id)
     if not obj:
         abort(404)
@@ -19,6 +20,7 @@ def city(city_id):
 @app_views.route('/states/<string:state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 def cities(state_id):
+    """ sends all cities in a state """
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
@@ -31,6 +33,7 @@ def cities(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_city(city_id):
+    """ deletes a particular city """
     obj = storage.get(City, city_id)
     if not obj:
         abort(404)
@@ -42,6 +45,7 @@ def delete_city(city_id):
 @app_views.route('/states/<string:state_id>/cities/', methods=['POST'],
                  strict_slashes=False)
 def post_city(state_id):
+    """ post a new city """
     res = request.get_json()
     dic = {}
     state_obj = storage.get(State, state_id)
@@ -62,6 +66,7 @@ def post_city(state_id):
 @app_views.route('/cities/<string:city_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_city(city_id):
+    """ a fucntion that updates a particular city """
     res = request.get_json()
     if not res:
         abort(400, {'Not a JSON'})

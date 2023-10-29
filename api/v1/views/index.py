@@ -24,5 +24,6 @@ def status():
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
+    """ a fucntion that display stats of our database """
     count = {key: storage.count(val) for key, val in classes.items()}
     return jsonify(count)

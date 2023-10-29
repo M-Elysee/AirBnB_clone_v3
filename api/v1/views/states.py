@@ -8,6 +8,7 @@ from api.v1.views import app_views
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
+    """ a function that display all states """
     objs = storage.all(State)
     lst = []
     for obj in objs.values():
@@ -18,6 +19,7 @@ def states():
 @app_views.route('/states/<string:state_id>', methods=['GET'],
                  strict_slashes=False)
 def state(state_id):
+    """ a function that display a particular state """
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
@@ -27,6 +29,7 @@ def state(state_id):
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state(state_id):
+    """ a function that deletes a particular state """
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
@@ -38,6 +41,7 @@ def delete_state(state_id):
 @app_views.route('/states/', methods=['POST'],
                  strict_slashes=False)
 def post_state():
+    """ a function that post a new state """
     res = request.get_json()
     dic = {}
     if not res:
@@ -54,6 +58,7 @@ def post_state():
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_state(state_id):
+    """ a function that updates a given state """
     res = request.get_json()
     if not res:
         abort(400, {'Not a JSON'})
