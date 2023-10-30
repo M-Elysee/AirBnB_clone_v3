@@ -13,7 +13,7 @@ def states():
     lst = []
     for obj in objs.values():
         lst.append(obj.to_dict())
-    return jsonify(lst), '200'
+    return jsonify(lst)
 
 
 @app_views.route('/states/<string:state_id>', methods=['GET'],
@@ -23,7 +23,7 @@ def state(state_id):
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
-    return jsonify(obj.to_dict()), '200'
+    return jsonify(obj.to_dict())
 
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
@@ -45,7 +45,7 @@ def post_state():
     res = request.get_json()
     dic = {}
     if not res:
-        abort(404, {'Not a JSON'})
+        abort(400, {'Not a JSON'})
     if 'name' not in res:
         abort(400, {'Missing name'})
     dic['name'] = res['name']
