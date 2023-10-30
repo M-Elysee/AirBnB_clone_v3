@@ -1,72 +1,69 @@
 #!/usr/bin/python3
-""" a script that handles default RESTFul api actions """
-from models import storage
+""" This Script handles default RESTFul api actions """
+
+from api.v1.views import app_views
 from flask import jsonify, request, abort
 from models.amenity import Amenity
-from api.v1.views import app_views
+from models import storage
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenities():
-    """ a function that display all amenities """
-    objs = storage.all(Amenity)
+    """ Module display all amenities """
+    objcts = storage.all(Amenity)
     lst = []
-    for obj in objs.values():
-        lst.append(obj.to_dict())
+    for objct in objcts.values():
+        lst.append(objct.to_dict())
     return jsonify(lst), '200'
-
-
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
-                 strict_slashes=False)
-def amenity(amenity_id):
-    """ a function that display a particular amenity """
-    obj = storage.get(Amenity, amenity_id)
-    if not obj:
-        abort(404)
-    return jsonify(obj.to_dict()), '200'
-
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity(amenity_id):
-    """ a fucntion that deletes a particular amenity """
-    obj = storage.get(Amenity, amenity_id)
-    if not obj:
+    """ Module deletes particular amenity """
+    objct = storage.get(Amenity, amenity_id)
+    if not objct:
         abort(404)
-    storage.delete(obj)
+    storage.delete(objct)
     storage.save()
     return jsonify({}), '200'
-
-
-@app_views.route('/amenities/', methods=['POST'],
-                 strict_slashes=False)
-def post_amenity():
-    """ a function that post a new amenity """
-    res = request.get_json()
-    dic = {}
-    if not res:
-        abort(404, {'Not a JSON'})
-    if 'name' not in res:
-        abort(400, {'Missing name'})
-    dic['name'] = res['name']
-    obj = Amenity(**dic)
-    storage.new(obj)
-    storage.save()
-    return jsonify(obj.to_dict()), '201'
-
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_amenity(amenity_id):
-    """ a fucntion that update a particular amenity """
-    res = request.get_json()
-    if not res:
+    """ Module updates particular amenity """
+    json_res = request.get_json()
+    if not json_res:
         abort(400, {'Not a JSON'})
-    obj = storage.get(Amenity, amenity_id)
-    if not obj:
+    objct = storage.get(Amenity, amenity_id)
+    if not objct:
         abort(404)
-    for key, value in res.items():
-        if key not in ['id', 'created_at', 'updated_at']:
-            setattr(obj, key, value)
+    for json_key, item in json_res.items():
+        if json_key not in ['id', 'created_at', 'updated_at']:
+            setattr(objct, json_key, item)
     storage.save()
-    return jsonify(obj.to_dict()), '200'
+    return jsonify(objct.to_dict()), '200'
+
+@app_views.route('/amenities/', methods=['POST'],
+                 strict_slashes=False)
+def post_amenity():
+    """ Module post new amenity """
+    json_res = request.get_json()
+    dct = {}
+    if not json_res:
+        abort(404, {'Not a JSON'})
+    if 'name' not in json_res:
+        abort(400, {'Missing name'})
+    dct['name'] = json_res['name']
+    objct = Amenity(**dct)
+    storage.new(objct)
+    storage.save()
+    return jsonify(objct.to_dict()), '201'
+
+@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
+                 strict_slashes=False)
+def amenity(amenity_id):
+    """ Module display particular amenity """
+    objct = storage.get(Amenity, amenity_id)
+    if not objct:
+        abort(404)
+    return jsonify(objct.to_dict()), '200'
