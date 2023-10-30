@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" a script that handles default RESTFul api actions """
+"""
+   a script that handles default RESTFul api actions
+"""
 from models import storage
 from flask import jsonify, request, abort
 from models.state import State
@@ -13,7 +15,7 @@ def states():
     lst = []
     for obj in objs.values():
         lst.append(obj.to_dict())
-    return jsonify(lst), '200'
+    return jsonify(lst)
 
 
 @app_views.route('/states/<string:state_id>', methods=['GET'],
@@ -23,7 +25,7 @@ def state(state_id):
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
-    return jsonify(obj.to_dict()), '200'
+    return jsonify(obj.to_dict())
 
 
 @app_views.route('/states/<string:state_id>', methods=['DELETE'],
@@ -45,7 +47,7 @@ def post_state():
     res = request.get_json()
     dic = {}
     if not res:
-        abort(404, {'Not a JSON'})
+        abort(400, {'Not a JSON'})
     if 'name' not in res:
         abort(400, {'Missing name'})
     dic['name'] = res['name']
@@ -60,11 +62,11 @@ def post_state():
 def update_state(state_id):
     """ a function that updates a given state """
     res = request.get_json()
-    if not res:
-        abort(400, {'Not a JSON'})
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
+    if not res:
+        abort(400, {'Not a JSON'})
     for key, value in res.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)

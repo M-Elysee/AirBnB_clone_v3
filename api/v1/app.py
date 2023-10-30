@@ -10,20 +10,18 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-def close(self):
-    """ Module that ends database session """
+def close(exception):
+    """ a function that ends database session """
     storage.close()
 
 
 @app.errorhandler(404)
 def not_found(error):
-    """ Module that handles 404 errors """
-    return jsonify({"error": "Not found"})
+    """ a function that handles 404 errors """
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
-    api_host = getenv('HBNB_API_HOST')
-    if not api_host:
-        api_host = '0.0.0.0'
-    port = getenv('HBNB_API_PORT') if getenv('HBNB_API_PORT') else '5000'
-    app.run(api_host, port, debug=True, threaded=True)
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(getenv('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, debug=True, threaded=True)

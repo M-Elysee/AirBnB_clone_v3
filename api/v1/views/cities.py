@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" a script that handles default RESTFul api actions """
+"""
+   a script that handles default RESTFul api actions
+"""
 from models import storage
 from flask import jsonify, request, abort
 from models.city import City
@@ -27,7 +29,7 @@ def cities(state_id):
     lst = []
     for city in obj.cities:
         lst.append(city.to_dict())
-    return jsonify(lst), '200'
+    return jsonify(lst)
 
 
 @app_views.route('/cities/<string:city_id>', methods=['DELETE'],
@@ -52,7 +54,7 @@ def post_city(state_id):
     if not state_obj:
         abort(404)
     if not res:
-        abort(404, {'Not a JSON'})
+        abort(400, {'Not a JSON'})
     if 'name' not in res:
         abort(400, {'Missing name'})
     dic['name'] = res['name']

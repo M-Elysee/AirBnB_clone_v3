@@ -16,13 +16,13 @@ classes = {'states': State, 'users': User, 'amenities': Amenity,
            'cities': City, 'places': Place, 'reviews': Review}
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """ an ok status return function """
-    return jsonify(status='OK')
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', strict_slashes=False)
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
     """ a fucntion that display stats of our database """
     count = {key: storage.count(val) for key, val in classes.items()}
