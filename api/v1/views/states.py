@@ -62,11 +62,11 @@ def post_state():
 def update_state(state_id):
     """ a function that updates a given state """
     res = request.get_json()
-    if not res:
-        abort(400, {'Not a JSON'})
     obj = storage.get(State, state_id)
     if not obj:
         abort(404)
+    if not res:
+        abort(400, {'Not a JSON'})
     for key, value in res.items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
