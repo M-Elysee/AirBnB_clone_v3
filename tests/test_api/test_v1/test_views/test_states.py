@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""testing the index route"""
+"""
+Testing index route
+"""
 import unittest
 import pep8
 from os import getenv
@@ -45,8 +47,8 @@ class TestStates(unittest.TestCase):
         """ Testing state POST route """
         with app.test_client() as tc:
             rspns = tc.post('/api/v1/states/',
-                          data=json.dumps({"name": "California"}),
-                          content_type="application/json")
+                            data=json.dumps({"name": "California"}),
+                            content_type="application/json")
             self.assertEqual(rspns.status_code, 201)
 
     def test_updates_state(self):
@@ -55,8 +57,8 @@ class TestStates(unittest.TestCase):
             state_new = State(name="Beckystan")
             storage.new(state_new)
             rspns = tc.put('api/v1/states/{}'.format(state_new.id),
-                         data=json.dumps({"name": "Beckytopia"}),
-                         content_type="application/json")
+                           data=json.dumps({"name": "Beckytopia"}),
+                           content_type="application/json")
             self.assertEqual(rspns.status_code, 200)
 
 

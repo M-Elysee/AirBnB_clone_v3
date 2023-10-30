@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""testing the index route"""
+"""
+Testing index route
+"""
 import unittest
 import pep8
 from os import getenv
@@ -13,13 +15,12 @@ storage = getenv("HBNB_TYPE_STORAGE")
 
 class TestIndex(unittest.TestCase):
     """ Test index """
-    def test_status(self):        
-        """ Testing status function"""
+    def test_status(self):
+        """ Testing status function """
         with app.test_client() as tc:
             rspns = tc.get('/api/v1/status')
             dta = json.loads(rspns.data.decode('utf-8'))
             self.assertEqual(dta, {'status': 'OK'})
-
 
     def test_count(self):
         """ Testing count """

@@ -18,18 +18,18 @@ class TestAmenityDocs(unittest.TestCase):
         """ Testing Set up for the doc tests """
         cls.amenity_f = inspect.getmembers(Amenity, inspect.isfunction)
 
-    def test_pep8_conformance_amenity(self):
+    def test_pep8_conform_amenity(self):
         """ Testing that models/amenity.py conforms to PEP8. """
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['models/amenity.py'])
-        self.assertEqual(result.total_errors, 0,
+        res = pep8s.check_files(['models/amenity.py'])
+        self.assertEqual(res.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-    def test_pep8_conformance_test_amenity(self):
-        """ Testing that tests/test_models/test_amenity.py conforms to PEP8. """
+    def test_pep8_conform_test_amenity(self):
+        """Testing that tests/test_models/test_amenity.py conforms to PEP8"""
         pep8s = pep8.StyleGuide(quiet=True)
-        result = pep8s.check_files(['tests/test_models/test_amenity.py'])
-        self.assertEqual(result.total_errors, 0,
+        res = pep8s.check_files(['tests/test_models/test_amenity.py'])
+        self.assertEqual(res.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_amenity_module_docstring(self):
@@ -58,47 +58,47 @@ class TestAmenityDocs(unittest.TestCase):
 class TestAmenity(unittest.TestCase):
     """ Testing the Amenity class """
     def test_is_subclass(self):
-        """ Test that Amenity is a subclass of BaseModel """
-        amenity = Amenity()
-        self.assertIsInstance(amenity, BaseModel)
-        self.assertTrue(hasattr(amenity, "id"))
-        self.assertTrue(hasattr(amenity, "created_at"))
-        self.assertTrue(hasattr(amenity, "updated_at"))
+        """ Testing that Amenity is a subclass of BaseModel """
+        amnty = Amenity()
+        self.assertIsInstance(am, BaseModel)
+        self.assertTrue(hasattr(amnty, "id"))
+        self.assertTrue(hasattr(amnty, "created_at"))
+        self.assertTrue(hasattr(amnty, "updated_at"))
 
     def test_name_attr(self):
-        """ Testing that Amenity has attribute name, and it's as an empty string """
-        amenity = Amenity()
-        self.assertTrue(hasattr(amenity, "name"))
+        """Testing that Amenity has attribute name, and is an empty string"""
+        amnty = Amenity()
+        self.assertTrue(hasattr(amnty, "name"))
         if models.storage_t == 'db':
-            self.assertEqual(amenity.name, None)
+            self.assertEqual(amnty.name, None)
         else:
-            self.assertEqual(amenity.name, "")
+            self.assertEqual(amnty.name, "")
 
     def test_to_dict_creates_dict(self):
         """ Testing to_dict method creates a dictionary with proper attrs """
-        am = Amenity()
-        print(am.__dict__)
-        new_d = am.to_dict()
-        self.assertEqual(type(new_d), dict)
-        self.assertFalse("_sa_instance_state" in new_d)
-        for attr in am.__dict__:
+        amnty = Amenity()
+        print(amnty.__dict__)
+        new_dct = amnty.to_dict()
+        self.assertEqual(type(new_dct), dict)
+        self.assertFalse("_sa_instance_state" in new_dct)
+        for attr in amnty.__dict__:
             if attr is not "_sa_instance_state":
-                self.assertTrue(attr in new_d)
-        self.assertTrue("__class__" in new_d)
+                self.assertTrue(attr in new_dct)
+        self.assertTrue("__class__" in new_dct)
 
     def test_to_dict_values(self):
         """ Testing that values in dict returned from to_dict are correct """
-        t_format = "%Y-%m-%dT%H:%M:%S.%f"
+        t_formt = "%Y-%m-%dT%H:%M:%S.%f"
         am = Amenity()
-        new_d = am.to_dict()
-        self.assertEqual(new_d["__class__"], "Amenity")
-        self.assertEqual(type(new_d["created_at"]), str)
-        self.assertEqual(type(new_d["updated_at"]), str)
-        self.assertEqual(new_d["created_at"], am.created_at.strftime(t_format))
-        self.assertEqual(new_d["updated_at"], am.updated_at.strftime(t_format))
+        n_dct = amn.to_dict()
+        self.assertEqual(n_dct["__class__"], "Amenity")
+        self.assertEqual(type(n_dct["created_at"]), str)
+        self.assertEqual(type(n_dct["updated_at"]), str)
+        self.assertEqual(n_dct["created_at"], am.created_at.strftime(t_formt))
+        self.assertEqual(n_dct["updated_at"], am.updated_at.strftime(t_formt))
 
     def test_str(self):
         """ Testing that the str method has correct output """
-        amenity = Amenity()
-        string = "[Amenity] ({}) {}".format(amenity.id, amenity.__dict__)
-        self.assertEqual(string, str(amenity))
+        amnty = Amenity()
+        string = "[Amenity] ({}) {}".format(amenity.id, amnty.__dict__)
+        self.assertEqual(string, str(amnty))

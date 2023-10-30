@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""testing the index route"""
+"""
+Testing index route
+"""
 import unittest
 import pep8
 from os import getenv
@@ -54,15 +56,15 @@ class TestPlaces(unittest.TestCase):
                               user_id=user_new.id)
             storage.new(new_place)
             rspns = tc.post('/api/v1/cities/{}/places'.format(city_new.id),
-                          data=json.dumps(dict(name="Becky's Bakery",
-                                               description="best egg tarts",
-                                               number_rooms=3,
-                                               number_bathrooms=0, max_guest=2,
-                                               price_by_night=100,
-                                               latitude=33.0, longitude=22.1,
-                                               city_id=city_new.id,
-                                               user_id=user_new.id)),
-                          content_type="application/json")
+                            data=json.dumps(dict(name="Becky's Bakery",
+                                            description="best egg tarts",
+                                            number_rooms=3,
+                                            number_bathrooms=0, max_guest=2,
+                                            price_by_night=100,
+                                            latitude=33.0, longitude=22.1,
+                                            city_id=city_new.id,
+                                            user_id=user_new.id)),
+                            content_type="application/json")
             self.assertEqual(rspns.status_code, 201)
 
     def test_deletes_place(self):
@@ -124,10 +126,8 @@ class TestPlaces(unittest.TestCase):
                               user_id=user_new.id)
             storage.new(new_place)
             rspns = tc.put('api/v1/places/{}'.format(new_place.id),
-                         data=json.dumps({"name": "Becky's Billards"}),
-                         content_type="application/json")
-            # data = json.loads(rspns.data.decode('utf-8'))
-            # print(data)
+                           data=json.dumps({"name": "Becky's Billards"}),
+                           content_type="application/json")
             self.assertEqual(rspns.status_code, 200)
 
 

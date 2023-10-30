@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""testing the index route"""
+"""
+Testing index route
+"""
 from api.v1.app import *
 import json
 import unittest
@@ -25,9 +27,9 @@ class TestUsers(unittest.TestCase):
         """test user POST route"""
         with app.test_client() as tc:
             rspns = tc.post('/api/v1/users/',
-                          data=json.dumps(dict(email="123@abtc.com",
-                                               password="0000")),
-                          content_type="application/json")
+                            data=json.dumps(dict(email="123@abtc.com",
+                                            password="0000")),
+                            content_type="application/json")
             self.assertEqual(rspns.status_code, 201)
 
     def test_deletes_user(self):
@@ -59,9 +61,9 @@ class TestUsers(unittest.TestCase):
                             email="123@abtc.com", password="0000")
             storage.new(new_user)
             rspns = tc.put('api/v1/users/{}'.format(new_user.id),
-                         data=json.dumps({"first_name": "Sailor",
-                                          "last_name": "Moon"}),
-                         content_type="application/json")
+                           data=json.dumps({"first_name": "Sailor",
+                                            "last_name": "Moon"}),
+                           content_type="application/json")
             self.assertEqual(rspns.status_code, 200)
 
 
