@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" a script that handles default RESTFul api actions """
+"""
+   a script that handles default RESTFul api actions
+"""
 from models import storage
 from flask import jsonify, request, abort
 from models.city import City
