@@ -35,10 +35,10 @@ def delete_state(state_id):
         abort(404)
     storage.delete(obj)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({}), '200'
 
 
-@app_views.route('/states', methods=['POST'],
+@app_views.route('/states/', methods=['POST'],
                  strict_slashes=False)
 def post_state():
     """ a function that post a new state """
@@ -52,7 +52,7 @@ def post_state():
     obj = State(**dic)
     storage.new(obj)
     storage.save()
-    return jsonify(obj.to_dict()), 201
+    return jsonify(obj.to_dict()), '201'
 
 
 @app_views.route('/states/<string:state_id>', methods=['PUT'],
@@ -69,4 +69,4 @@ def update_state(state_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
     storage.save()
-    return jsonify(obj.to_dict()), 200
+    return jsonify(obj.to_dict()), '200'

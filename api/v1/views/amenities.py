@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-""" a script that handles default RESTFul api actions """
+"""
+   a script that handles default RESTFul api actions
+"""
 from models import storage
 from flask import jsonify, request, abort
 from models.amenity import Amenity
@@ -35,10 +37,10 @@ def delete_amenity(amenity_id):
         abort(404)
     storage.delete(obj)
     storage.save()
-    return jsonify({}), 200
+    return jsonify({}), '200'
 
 
-@app_views.route('/amenities', methods=['POST'],
+@app_views.route('/amenities/', methods=['POST'],
                  strict_slashes=False)
 def post_amenity():
     """ a function that post a new amenity """
@@ -69,4 +71,4 @@ def update_amenity(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
     storage.save()
-    return jsonify(obj.to_dict()), 200
+    return jsonify(obj.to_dict()), '200'
