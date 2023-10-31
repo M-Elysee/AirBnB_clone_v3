@@ -6,12 +6,13 @@ from models import storage
 from flask import jsonify, request, abort
 from models.amenity import Amenity
 from models import storage
+from api.v1.views import app_views
 
 
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenities():
     """ Module display all amenities """
-    objcts = storage.all(Amenity)
+    objs = storage.all(Amenity)
     lst = []
     for obj in objs.values():
         lst.append(obj.to_dict())
@@ -71,29 +72,4 @@ def update_amenity(amenity_id):
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(obj, key, value)
     storage.save()
-    return jsonify(objct.to_dict()), '200'
-
-@app_views.route('/amenities/', methods=['POST'],
-                 strict_slashes=False)
-def post_amenity():
-    """ Module post new amenity """
-    json_res = request.get_json()
-    dct = {}
-    if not json_res:
-        abort(404, {'Not a JSON'})
-    if 'name' not in json_res:
-        abort(400, {'Missing name'})
-    dct['name'] = json_res['name']
-    objct = Amenity(**dct)
-    storage.new(objct)
-    storage.save()
-    return jsonify(objct.to_dict()), '201'
-
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
-                 strict_slashes=False)
-def amenity(amenity_id):
-    """ Module display particular amenity """
-    objct = storage.get(Amenity, amenity_id)
-    if not objct:
-        abort(404)
-    return jsonify(objct.to_dict()), '200'
+    return jsonify(obj.to_dict()), '200'

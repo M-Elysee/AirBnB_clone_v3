@@ -10,8 +10,8 @@ import uuid
 from os import getenv
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
-    @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-    @app_views.route('/places/<place_id>/amenities/', methods=['GET'])
+    @app_views.route('/places/<place_id>/amenities', methods=['GET'],
+                     strict_slashes=False)
     def list_amenities_of_place(place_id):
         """ Module Retrieves list of all Amenity objects of Place """
         obj_places = storage.all("Place").values()
@@ -26,7 +26,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
         return jsonify(ls_amenities)
 
     @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                     methods=['POST'])
+                     methods=['POST'], strict_slashes=False)
     def create_place_amenity(place_id, amenity_id):
         """ Module Creates Amenity """
         obj_places = storage.all("Place").values()
@@ -52,7 +52,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
         return jsonify(amenities[0]), 201
 
     @app_views.route('/places/<place_id>/amenities/<amenity_id>',
-                     methods=['DELETE'])
+                     methods=['DELETE'], strict_slashes=False)
     def delete_place_amenity(place_id, amenity_id):
         """ Module Deletes Amenity object """
         obj_places = storage.all("Place").values()
@@ -77,13 +77,13 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
                         storage.save()
         return jsonify({}), 200
 
-
-    @app_views.route('/amenities/<amenity_id>', methods=['GET'])
+    @app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                     strict_slashes=False)
     def get_place_amenity(amenity_id):
         """ Module Retrieves Amenity object """
         obj_amenities = storage.all("Amenity").values()
         obj_amenity = [amnt.to_dict() for amnt in obj_amenities
-                    if amnt.id == amenity_id]
+                       if amnt.id == amenity_id]
         if obj_amenity == []:
             abort(404)
         return jsonify(obj_amenity[0])
