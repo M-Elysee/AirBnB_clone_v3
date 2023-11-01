@@ -10,7 +10,7 @@ import uuid
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def list_users():
-    """Module Retrieves list of all User objects"""
+    """ Module Retrieves list of all User objects """
     list_users = [obj.to_dict() for obj in storage.all("User").values()]
     return jsonify(list_users)
 
@@ -18,7 +18,7 @@ def list_users():
 @app_views.route('/users/<user_id>', methods=['GET'],
                  strict_slashes=False)
 def get_user(user_id):
-    """Module Retrieves User object"""
+    """ Module Retrieves User object """
     users_obj = storage.all("User").values()
     user_obj = [usr.to_dict() for usr in users_obj if usr.id == user_id]
     if user_obj == []:
@@ -29,7 +29,7 @@ def get_user(user_id):
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_user(user_id):
-    """Module Deletes User object"""
+    """ Module Deletes User object """
     users_obj = storage.all("User").values()
     user_obj = [usr.to_dict() for usr in users_obj if usr.id == user_id]
     if user_obj == []:
@@ -44,7 +44,7 @@ def delete_user(user_id):
 
 @app_views.route('/users/', methods=['POST'], strict_slashes=False)
 def create_user():
-    """Module Creates User"""
+    """ Module Creates User """
     if not request.get_json():
         abort(400, 'Not a JSON')
     if 'email' not in request.get_json():
@@ -63,7 +63,7 @@ def create_user():
 @app_views.route('/users/<user_id>', methods=['PUT'],
                  strict_slashes=False)
 def update_user(user_id):
-    """Module Updates User object"""
+    """ Module Updates User object """
     users_obj = storage.all("User").values()
     user_obj = [usr.to_dict() for usr in users_obj if usr.id == user_id]
     if user_obj == []:
