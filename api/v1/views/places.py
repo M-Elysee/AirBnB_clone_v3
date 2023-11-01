@@ -133,8 +133,8 @@ def places_search():
             list_plcs = storage.all(plc).values()
         amenities_obj = [storage.get(Amenity, a_id) for a_id in amenities]
         list_plcs = [plc for plc in list_plcs
-                       if all([am in plc.amenities
-                               for am in amenities_obj])]
+                     if all([am in plc.amenities
+                            for am in amenities_obj])]
 
     plcs = []
     for p in list_plcs:
