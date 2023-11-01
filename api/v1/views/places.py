@@ -168,3 +168,4 @@ def places_search():
         plcs.append(d)
 
     return jsonify(plcs)
+    
